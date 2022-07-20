@@ -36,6 +36,9 @@ public class FileBrowser extends JPanel implements ActionListener {
 		JPanel newP = new JPanel();
 		newP.add(newFileTF);
 		newP.add(newFile);
+		newFile.addActionListener(this);
+		open.addActionListener(this);
+		
 		fileList.add(open);
 		fileList.add(newP);
 		add(fileList);
@@ -44,6 +47,19 @@ public class FileBrowser extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		Login login = (Login)getParent();
+		if(e.getSource() == open) {
+			login.add(new Editor(directory.getName()+"\\"+bg.getSelection().getActionCommand()), "editor");
+			login.cl.show(login, "editor");
+			
+		}
+		if(e.getSource() == newFile) {
+			String file = directory.getName()+"\\"+ newFileTF.getText()+".txt";
+			if (newFileTF.getText().length() > 0 && !(new File(file).exists())) {
+				login.add(new Editor(file), "editor");
+				login.cl.show(login, "editor");
+			}
+		}
 		
 	}
 	
